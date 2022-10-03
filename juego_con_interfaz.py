@@ -1,7 +1,7 @@
 from interfaz import jugar_con_interfaz
 from clases import Jugador
 from tablero import TableroCatan
-from juego import rellenar_tablero_extra, rellenar_tablero_basico, RELLENAR_MEJORADO
+from juego import rellenar_tablero
 
 """
 Para correr el juego, simplemente correr este archivo
@@ -23,12 +23,9 @@ def main():
     #Tablero
     tablero_a_jugar = TableroCatan()
 
-    if RELLENAR_MEJORADO:
-        rellenar_tablero_extra(tablero_a_jugar)
-    else:
-        rellenar_tablero_basico(tablero_a_jugar)
-
     #No se olviden de rellenar el tablero!
+    rellenar_tablero(tablero_a_jugar)
+    
     jugar_con_interfaz(jugadores,tablero_a_jugar)
 
 if __name__ == "__main__":

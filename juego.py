@@ -1,15 +1,12 @@
 ORDEN_ESPECIAL = True
 RELLENAR_MEJORADO = True
-RECURSOS_INICIALES = True
+RECURSOS_INICIALES = True  #False por default debido a que rompe los tests
 
-from logging.config import valid_ident
 import random as ran
 import math
-import resource
 from typing import List
 from clases import Asentamiento, Camino, Jugador
 from tablero import TableroCatan
-import sys
 
 #-----------------------------  UTILS -------------------------------#
 
@@ -43,7 +40,14 @@ def tirar_dados():
     return dado1 + dado2
 
 
-def rellenar_tablero_basico(Tablero: TableroCatan):
+def rellenar_tablero(tablero: TableroCatan):
+    if RELLENAR_MEJORADO:
+        rellenar_extra(tablero)
+    else:
+        rellenar_basico(tablero)
+
+
+def rellenar_basico(tablero: TableroCatan):
     # Create a list with all the resources
     resourceOrder = [
         "Ladrillo", "Ladrillo", "Ladrillo",
@@ -59,10 +63,10 @@ def rellenar_tablero_basico(Tablero: TableroCatan):
 
     for i in range(19):
         if (i + 1 == 10): continue
-        Tablero.colocar_recurso_y_numero(i + 1, resourceOrder.pop(), numberOrder.pop())
+        tablero.colocar_recurso_y_numero(i + 1, resourceOrder.pop(), numberOrder.pop())
 
 
-def jugar_catan(jugadores,tablero):
+def jugar_catan(jugadores: List[Jugador], tablero : TableroCatan):
     # Inicio del juego (ORDEN ESPECIAL)
     if ORDEN_ESPECIAL:
         inicio_juego_extra(jugadores, tablero)
@@ -82,7 +86,7 @@ def jugar_catan(jugadores,tablero):
 
     pass
 
-def inicio_juego_basico(jugadores, tablero):
+def inicio_juego_basico(jugadores : List[Jugador], tablero : TableroCatan):
     for jugador in jugadores:
         print("\n\nTurno inicial de " + jugador.nombre)
         print('v-----------------------------v')
@@ -100,7 +104,7 @@ def inicio_juego_basico(jugadores, tablero):
         print("Fin de turno")
     return
 
-def jugar_turno(jugador, tablero):
+def jugar_turno(jugador : Jugador, tablero : TableroCatan):
 
     print("\nTurno de " + jugador.nombre)
     print('v-----------------------------v\n')
@@ -174,7 +178,7 @@ def jugar_turno(jugador, tablero):
 
 #----------------------EXTRA: ORDEN ESPECIAL ----------------------#
 
-def inicio_juego_extra(jugadores, tablero: TableroCatan):
+def inicio_juego_extra(jugadores : List[Jugador], tablero: TableroCatan):
 
     for jugador in jugadores:
         print("\n\nPrimer turno inicial de " + jugador.nombre)
@@ -276,7 +280,7 @@ def getAdjacentCoordinatesTo(space):
 
 #----------------------EXTRA: GENERACION DE TABLERO MEJORADA ----------------------#
 
-def rellenar_tablero_extra(tablero : TableroCatan):
+def rellenar_extra(tablero : TableroCatan):
         # Create a list with all the numbers
     numberOrder = [2, 3, 3, 4, 4, 5, 5, 9, 9, 10, 10, 11, 11, 12]
     ran.shuffle(numberOrder)
@@ -348,7 +352,7 @@ def hasAdjecentSixOrEight(hexagonArray, currentHexagonY, currentHexagonX):
                 return True
     return False
 
-def placeEverySixOrEight(hexagonArray, tablero, hexCoordinates, sixEightOrder, resourceOrder):
+def placeEverySixOrEight(hexagonArray, tablero : TableroCatan, hexCoordinates, sixEightOrder, resourceOrder):
 
     while sixEightOrder:
 
