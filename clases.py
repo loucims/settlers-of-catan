@@ -1,8 +1,3 @@
-import pygame
-import math
-import random as ran
-from tablero import TableroCatan
-
 
 class Asentamiento:
     def __init__(self, jugador):
@@ -42,10 +37,3 @@ class Jugador:
             self.recursos[recurso] -= quantity
 
     pass
-
-
-#---------------------------- UTILS ----------------------------#
-
-
-#---------------------------- DEBUG ----------------------------#
-

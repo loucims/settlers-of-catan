@@ -70,7 +70,8 @@ def jugar_catan(jugadores: List[Jugador], tablero : TableroCatan):
     # Inicio del juego (ORDEN ESPECIAL)
     if ORDEN_ESPECIAL:
         inicio_juego_extra(jugadores, tablero)
-    else: inicio_juego_basico(jugadores, tablero)
+    else: 
+        inicio_juego_basico(jugadores, tablero)
 
     for x in range(10):
         print("\n\nRonda :" + str(x + 1))
